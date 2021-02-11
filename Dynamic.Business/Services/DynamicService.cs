@@ -18,7 +18,7 @@ namespace Dynamic.Business.Services
             this.mapper = mapper;
         }
 
-        public async Task CreateDocumentAsync(DocumentViewModel entityViewModel)
+        public async Task<DocumentResponseViewModel> CreateDocumentAsync(DocumentViewModel entityViewModel)
         {
             IRepository<Document> repository = await repositoryService.GetRepositoryAsync();
 
@@ -27,12 +27,17 @@ namespace Dynamic.Business.Services
             if(existentDocument != null)
             {
                 await UpdateDocumentAsync(entityViewModel, existentDocument.Id);
-                return;
+                return new DocumentResponseViewModel(existentDocument);
             }
 
             Document doc = mapper.Map<Document>(entityViewModel);
             
             await repository.InsertOneAsync(doc);
+
+            Document insertedDocument = await repository.FindByNameAsync(doc.Name);
+
+            return new DocumentResponseViewModel(insertedDocument);
+
         }
 
         public async Task DeleteByIdAsync(string id)

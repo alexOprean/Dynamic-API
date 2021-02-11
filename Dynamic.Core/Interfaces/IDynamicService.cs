@@ -5,7 +5,7 @@ namespace Dynamic.Core.Interfaces
 
     public interface IDynamicService
     {
-        Task CreateDocumentAsync(DocumentViewModel entityViewModel);
+        Task<DocumentResponseViewModel> CreateDocumentAsync(DocumentViewModel entityViewModel);
 
         Task DeleteByIdAsync(string id);
 

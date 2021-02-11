@@ -22,8 +22,8 @@ namespace Dynamic.Api.Controllers
         [Route("create")]
         public async Task<IActionResult> CreateDocumentAsync([FromBody] DocumentViewModel documentViewModel)
         {
-            await dynamicServices.CreateDocumentAsync(documentViewModel);
-            return Ok();
+            DocumentResponseViewModel document = await dynamicServices.CreateDocumentAsync(documentViewModel);
+            return Ok(document);
         }
 
         [HttpGet]
